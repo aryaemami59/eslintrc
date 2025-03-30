@@ -4,6 +4,14 @@
  */
 
 //------------------------------------------------------------------------------
+// Typedefs
+//------------------------------------------------------------------------------
+
+/**
+ * @import { ESLint } from "eslint";
+ */
+
+//------------------------------------------------------------------------------
 // Requirements
 //------------------------------------------------------------------------------
 
@@ -20,6 +28,10 @@ import globals from "globals";
  * @returns {Record<string,boolean>} The difference object.
  */
 function getDiff(current, prev) {
+
+    /**
+     * @type {Record<string,boolean>}
+     */
     const retv = {};
 
     for (const [key, value] of Object.entries(current)) {
@@ -53,7 +65,9 @@ const newGlobals2021 = {
 // Public Interface
 //------------------------------------------------------------------------------
 
-/** @type {Map<string, import("../lib/shared/types").Environment>} */
+/**
+ * @type {Map<string, ESLint.Environment>}
+ */
 export default new Map(Object.entries({
 
     // Language

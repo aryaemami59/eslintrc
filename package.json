@@ -7,14 +7,32 @@
   "types": "./dist/eslintrc.d.cts",
   "exports": {
     ".": {
-      "import": "./lib/index.js",
-      "require": "./dist/eslintrc.cjs",
-      "types": "./lib/types/index.d.ts"
+      "import": {
+        "types": "./lib/types/index.d.ts",
+        "default": "./lib/index.js"
+      },
+      "require": {
+        "types": "./dist/eslintrc.d.cts",
+        "default": "./dist/eslintrc.cjs"
+      }
     },
     "./package.json": "./package.json",
     "./universal": {
-      "import": "./lib/index-universal.js",
-      "require": "./dist/eslintrc-universal.cjs"
+      "import": {
+        "types": "./lib/types/index-universal.d.ts",
+        "default": "./lib/index-universal.js"
+      },
+      "require": {
+        "types": "./dist/eslintrc-universal.d.cts",
+        "default": "./dist/eslintrc-universal.cjs"
+      }
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "universal": [
+        "./lib/types/index-universal.d.ts"
+      ]
     }
   },
   "files": [
@@ -28,9 +46,10 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rollup -c && node -e \"fs.copyFileSync('./lib/types/index.d.ts', './dist/eslintrc.d.cts')\"",
+    "build": "rollup -c && node -e \"fs.copyFileSync('./lib/types/index.d.ts', './dist/eslintrc.d.cts')\" && node -e \"fs.copyFileSync('./lib/types/index-universal.d.ts', './dist/eslintrc-universal.d.cts')\"",
     "lint": "eslint . --report-unused-disable-directives",
     "lint:fix": "npm run lint -- --fix",
+    "lint:types": "attw --pack",
     "prepare": "npm run build",
     "release:generate:latest": "eslint-generate-release",
     "release:generate:alpha": "eslint-generate-prerelease alpha",
@@ -54,6 +73,8 @@
   },
   "homepage": "https://github.com/eslint/eslintrc#readme",
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.17.4",
+    "@eslint/config-array": "^0.20.0",
     "c8": "^7.7.3",
     "chai": "^4.3.4",
     "eslint": "^9.20.1",
@@ -65,7 +86,7 @@
     "shelljs": "^0.8.5",
     "sinon": "^11.1.2",
     "temp-dir": "^2.0.0",
-    "typescript": "^5.7.3"
+    "typescript": "^5.8.2"
   },
   "dependencies": {
     "ajv": "^6.12.4",

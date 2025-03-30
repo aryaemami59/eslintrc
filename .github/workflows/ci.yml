@@ -1,9 +1,5 @@
 name: CI
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+on: [push, pull_request]
 
 jobs:
   verify_files:
@@ -53,3 +49,21 @@ jobs:
       run: npm install
     - name: Test
       run: npm run test:types
+
+  are-the-types-wrong:
+    name: Are the types wrong?
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+            node-version: "lts/*"
+
+      - name: Install Packages
+        run: npm install
+
+      - name: Check validity of type definitions
+        run: npm run lint:types
